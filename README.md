@@ -1,3 +1,9 @@
+## Plan
+1. Create data
+2. Create routes
+3. Build out state
+4. Create onClick and props
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
