@@ -1,12 +1,27 @@
 import React, { Component } from 'react'
 
-export default class PokeList extends Component {
+//Step 3: This component should take in props to render the poke data in an ul in PokeList
+export default class PokeItem extends Component {
     render() {
-        return (<li key={this.props.id}>
-            <h3>Name: {this.props.title}</h3>
-            <p>{this.props.description}</p>
-            <p>Horns: {this.props.horns}</p>
-            <img alt={this.props.title} src={this.props.image} />
+        const {
+            pokeProp: {
+                _id,
+                url_image,
+                pokemon,
+                attack,
+                defense,
+                type_1
+            }
+        } = this.props;
+
+        return (<li key={_id}>
+            <img alt='pokemon' src={url_image} />
+            <h3>Pokemon name: {pokemon}</h3>
+            <p>Attack: {attack}</p>
+            <p>Defense: {defense}</p>
+            <p>Type: {type_1}</p>
         </li>);
     }
 }
+
+//Question: Why don't I need to import my data to use the data keys in my props.
