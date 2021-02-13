@@ -42,30 +42,32 @@ export default class SearchPage extends Component {
         if (this.state.sortBy) {
 
             if (typeof (pokes[0][this.state.sortBy]) === 'number') {
-                //Sort based on asc and desc, if statement
-                this.state.pokemon.sort((a, b) => a[this.state.sortBy] - (b[this.state.sortBy]))
-
-            } else { this.state.pokemon.sort((a, b) => b[this.state.sortBy] - (a[this.state.sortBy])) };
-        }
-
-        if (this.state.sortBy) {
-
-            if (typeof (pokes[0][this.state.sortBy]) !== 'number') {
-                //Sort based on asc and desc, if statement
                 if (this.state.sortOrder === 'Ascend') {
-                    this.state.pokemon.sort((a, b) => a[this.state.sortBy].localeCompare(b[this.state.sortBy]))
+                    //Sort based on asc and desc, if statement
+                    this.state.pokemon.sort((a, b) => a[this.state.sortBy] - (b[this.state.sortBy]))
 
-                } else { this.state.pokemon.sort((a, b) => b[this.state.sortBy].localeCompare(a[this.state.sortBy])) };
+                } else { this.state.pokemon.sort((a, b) => b[this.state.sortBy] - (a[this.state.sortBy])) };
             }
 
+            if (this.state.sortBy) {
+
+                if (typeof (pokes[0][this.state.sortBy]) !== 'number') {
+                    //Sort based on asc and desc, if statement
+                    if (this.state.sortOrder === 'Ascend') {
+                        this.state.pokemon.sort((a, b) => a[this.state.sortBy].localeCompare(b[this.state.sortBy]))
+
+                    } else { this.state.pokemon.sort((a, b) => b[this.state.sortBy].localeCompare(a[this.state.sortBy])) };
+                }
+            }
 
 
             //filter based on character name
             const filterPoke = pokes.filter(poke => poke.pokemon.includes(this.state.filter))
+            console.log(filterPoke);
 
             return (
-                <div>
-                    <aside className='searchBar'>
+                <div className='display-container'>
+                    <aside className='search-bar'>
                         Search Character:
                     <SearchBar currentValue={this.state.filter}
                             handleChange={this.handleFilterChange} />
@@ -77,7 +79,7 @@ export default class SearchPage extends Component {
                             handleChange={this.handleSortByChange}
                             options={[{ value: 'pokemon', name: 'Pokemon' }, { value: 'attack', name: 'Attack' }, { value: 'type_1', name: 'Type' }, { value: 'defense', name: 'Defense' }]} />
                     </aside>
-                    <main className='pokeDisplay'>
+                    <main className='poke-display'>
                         <PokeList pokes={filterPoke} />
                     </main>
                 </div>

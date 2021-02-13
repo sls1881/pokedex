@@ -43,12 +43,27 @@
 }
 
 nav {
-  width: 10%;
-  height: 150px;
+  width: 15%;
+  height: 50px;
   display: flex;
   justify-content: space-around;
+  align-items: flex-end;
+  margin: 20px;
 }
 
 li {
   list-style: none;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h1{
+  font-size: 2rem;
+  text-align: center;
+}
+
+.display-container {
+  margin: 30px;
 }
