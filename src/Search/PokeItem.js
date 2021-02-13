@@ -15,7 +15,7 @@ export default class PokeItem extends Component {
         } = this.props;
 
         return (<li key={url_image}>
-            <img alt='pokemon' src={url_image} />
+            <img className='image-items' alt='pokemon' src={url_image} />
             <h3>Pokemon name: {pokemon}</h3>
             <p>Attack: {attack}</p>
             <p>Defense: {defense}</p>

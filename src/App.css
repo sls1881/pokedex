@@ -62,8 +62,18 @@ h2 {
 h1{
   font-size: 2rem;
   text-align: center;
+  color: red;
 }
 
 .display-container {
   margin: 30px;
+}
+
+.home {
+  padding: 50px;
+}
+
+.image-items {
+  width: 300px;
+  height: 300px;
 }
