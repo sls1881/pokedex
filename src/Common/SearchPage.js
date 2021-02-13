@@ -1,73 +1,87 @@
 import React, { Component } from 'react'
-// import SearchBar from '../Search/SearchBar.js'
+import SearchBar from '../Search/SearchBar.js'
 import PokeList from '../Search/PokeList.js'
-// import Dropdown from '../Search/Dropdown.js'
+import Sort from '../Search/Sort.js'
 // import pokes from './Data.js'
 import pokes from '../Common/Data.js'
 
 export default class SearchPage extends Component {
-    //     //Declare state
-    //     state = {
-    //         pokemon: pokes,
-    //         sortOrder: 'Ascend',
-    //         sortBy: 'pokemon',
-    //         query: ''
-    //     }
+    //Declare state
+    state = {
+        pokemon: pokes,
+        sortOrder: 'Ascend',
+        sortBy: 'pokemon',
+        filter: ''
+    }
 
-    //     //clickHandler
-    //     clickHandler = (e) => {
-    //         //setState
-    //         this.setState({
-    //             sortOrder: e.target.value
-    //         })
-    //     }
+    //clickSortHandler
+    handleSortOrderChange = (e) => {
+        //setState
+        this.setState({
+            sortOrder: e.target.value
+        })
+    }
 
-    //     //clickHandler
-    //     clickHandler = (e) => {
-    //         //setState
-    //         this.setState({
-    //             sortBy: e.target.value
-    //         })
-    //     }
+    //clickHandler
+    handleSortByChange = (e) => {
+        //setState
+        this.setState({
+            sortBy: e.target.value
+        })
+    }
 
-    //     //clickHandler
-    //     handleChange = (e) => {
-    //         //setState
-    //         this.setState({
-    //             query: e.target.value
-    //         })
-    //     }
+    //clickHandler
+    handleFilterChange = (e) => {
+        //setState
+        this.setState({
+            filter: e.target.value
+        })
+    }
 
     render() {
+        if (this.state.sortBy) {
 
-        //         //Sort based on asc and desc, if statement
-        //         if (this.state.sortOrder === 'Ascend') {
-        //             this.state.pokemon.sort((a, b) => a.pokemon.localeCompare(b.pokemon))
+            if (typeof (pokes[0][this.state.sortBy]) === 'number') {
+                //Sort based on asc and desc, if statement
+                this.state.pokemon.sort((a, b) => a[this.state.sortBy] - (b[this.state.sortBy]))
 
-        //         } else { this.state.pokemon.sort((a, b) => b.pokemon.localeCompare(a.pokemon)) };
+            } else { this.state.pokemon.sort((a, b) => b[this.state.sortBy] - (a[this.state.sortBy])) };
+        }
 
-        //         //filter based on character name
-        // const filterPoke = this.state.pokemon.filter(poke => poke.poke.includes(this.state.query))
+        if (this.state.sortBy) {
 
-        return (
-            <div>
-                {/* / <aside className='searchBar'>
-                    Search Character:
-                    <SearchBar currentValue={this.state.query}
-                        handleChange={this.handleChange} />
-                    <Dropdown currentValue={this.state.sortOrder}
-                        handleClick={this.handleClick}
-                        options={['Ascend', 'Descend']}
-                    /> */}
-                {/* Displays category together based on options below*/}
-                {/* <Dropdown currentValue={this.state.sortBy}
-                        handleClick={this.handleClick}
-                        options={['pokemon', 'attack', 'type_1', 'defense']} />
-                </aside> */}
-                <main className='pokeDisplay'>
-                    <PokeList pokes={pokes} />
-                </main>
-            </div>
-        )
+            if (typeof (pokes[0][this.state.sortBy]) !== 'number') {
+                //Sort based on asc and desc, if statement
+                if (this.state.sortOrder === 'Ascend') {
+                    this.state.pokemon.sort((a, b) => a[this.state.sortBy].localeCompare(b[this.state.sortBy]))
+
+                } else { this.state.pokemon.sort((a, b) => b[this.state.sortBy].localeCompare(a[this.state.sortBy])) };
+            }
+
+
+
+            //filter based on character name
+            const filterPoke = pokes.filter(poke => poke.pokemon.includes(this.state.filter))
+
+            return (
+                <div>
+                    <aside className='searchBar'>
+                        Search Character:
+                    <SearchBar currentValue={this.state.filter}
+                            handleChange={this.handleFilterChange} />
+                        <Sort currentValue={this.state.sortOrder}
+                            handleChange={this.handleSortOrderChange}
+                            options={[{ value: 'ascend', name: 'Ascend' }, { value: 'descend', name: 'Descend' }]}
+                        />
+                        <Sort currentValue={this.state.sortBy}
+                            handleChange={this.handleSortByChange}
+                            options={[{ value: 'pokemon', name: 'Pokemon' }, { value: 'attack', name: 'Attack' }, { value: 'type_1', name: 'Type' }, { value: 'defense', name: 'Defense' }]} />
+                    </aside>
+                    <main className='pokeDisplay'>
+                        <PokeList pokes={filterPoke} />
+                    </main>
+                </div>
+            )
+        }
     }
 }

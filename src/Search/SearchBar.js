@@ -4,7 +4,8 @@ export default class SearchBar extends Component {
     render() {
         return (
             <div>
-                <input onChange={this.props.handleChange} />
+                <input value={this.props.currentValue}
+                    onChange={this.props.handleChange} />
             </div>
         )
     }
