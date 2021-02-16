@@ -1,3 +1,6 @@
+![PokedexPlan](https://user-images.githubusercontent.com/65752519/108122379-0a2c2e80-7059-11eb-8dac-09ffea0f4c81.png)
+
+
 ## Plan
 1. Create data
 2. Create routes
