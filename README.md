@@ -1,3 +1,12 @@
+![PokedexPlan](https://user-images.githubusercontent.com/65752519/108122379-0a2c2e80-7059-11eb-8dac-09ffea0f4c81.png)
+
+
+## Plan
+1. Create data
+2. Create routes
+3. Build out state
+4. Create onClick and props
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
