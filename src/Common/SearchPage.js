@@ -73,7 +73,7 @@ export default class SearchPage extends Component {
                             handleChange={this.handleFilterChange} />
                         <Sort currentValue={this.state.sortOrder}
                             handleChange={this.handleSortOrderChange}
-                            options={[{ value: 'ascend', name: 'Ascend' }, { value: 'descend', name: 'Descend' }]}
+                            options={[{ value: 'Ascend', name: 'Ascend' }, { value: 'Descend', name: 'Descend' }]}
                         />
                         <Sort currentValue={this.state.sortBy}
                             handleChange={this.handleSortByChange}
