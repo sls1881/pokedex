@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-// import SearchBar from '../Search/SearchBar.js'
-// import PokeList from '../Search/PokeList.js'
 import request from 'superagent'
-// import PokeList from '../Search/PokeList';
+import '../App.css';
+import Spinner from './Spinner.js'
 
 
 export default class SearchPage extends Component {
@@ -11,29 +10,34 @@ export default class SearchPage extends Component {
         pokemon: [],
         sortOrder: '',
         sortBy: '',
-        filter: ''
+        filter: '',
+        loading: false,
     }
 
     //Fetch the data on load to display pokemon
     componentDidMount = async () => {
-        //Declare data API
-        const pokeData = await request.get('https://pokedex-alchemy.herokuapp.com/api/pokedex?');
+        await this.fetchPokemon();
 
-        //Set the state
-        this.setState({ pokemon: pokeData.body.results });
+    }
+
+    fetchPokemon = async () => {
+
+        this.setState({ loading: true });
+
+        const pokeData = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.filter}`);
+
+        this.setState({
+            loading: false,
+            pokemon: pokeData.body.results
+        });
     }
 
     //click handler
     handleClick = async () => {
-        const pokeData = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.filter}`);
-        //setState
-        this.setState({
-            pokemon: pokeData.body.results
-
-        });
+        await this.fetchPokemon();
     }
     //Change handler
-    handleChange = async (e) => {
+    handleChange = (e) => {
         //setState
         this.setState({
             filter: e.target.value
@@ -54,12 +58,16 @@ export default class SearchPage extends Component {
                 </aside>
                 <main>
                     <div>
-                        {this.state.pokemon.map(poke =>
-                            <div key={poke.pokemon}>
-                                <img alt='pokemon' src={poke.url_image} />
-                                {poke.pokemon}
-                                {poke.type_1}
-                            </div>)}
+                        {this.state.loading ? <Spinner /> :
+                            this.state.pokemon.map(poke =>
+                                <div key={poke.pokemon}>
+                                    <img alt='pokemon' src={poke.url_image} />
+                                    <div>
+                                        Name: {poke.pokemon}
+                                    </div>
+                                    <div>Attacks:{poke.attack}</div>
+                                    <div>Defense: {poke.defense}</div>
+                                </div>)}
                     </div>
                 </main>
             </div >
