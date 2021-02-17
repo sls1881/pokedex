@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import request from 'superagent'
 import '../App.css';
 import Spinner from './Spinner.js'
+import Sort from '../Search/Sort.js'
+import SearchBar from '../Search/SearchBar.js'
 
 
 export default class SearchPage extends Component {
@@ -24,7 +26,7 @@ export default class SearchPage extends Component {
 
         this.setState({ loading: true });
 
-        const pokeData = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.filter}`);
+        const pokeData = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.filter}&sort=${this.state.sortBy}&direction=${this.state.sortOrder}`);
 
         this.setState({
             loading: false,
@@ -36,6 +38,7 @@ export default class SearchPage extends Component {
     handleClick = async () => {
         await this.fetchPokemon();
     }
+
     //Change handler
     handleChange = (e) => {
         //setState
@@ -44,16 +47,34 @@ export default class SearchPage extends Component {
         })
     }
 
+    handleSortOrderChange = (e) => {
+        this.setState({
+            sortOrder: e.target.value
+        })
+    }
+
+    handleSortByChange = (e) => {
+        this.setState({
+            sortBy: e.target.value
+        })
+    }
+
     render() {
 
         return (
             <div className='display-container' >
                 <aside>
-                    <label>
-                        Search
-                    <input onChange={this.handleChange} />
-                    </label>
-                    <button onClick={this.handleClick}>Search</button>
+                    Search Character:
+                    <SearchBar currentValue={this.state.filter}
+                        handleClick={this.handleClick}
+                        handleChange={this.handleChange} />
+                    <Sort currentValue={this.state.sortOrder}
+                        handleChange={this.handleSortOrderChange}
+                        options={[{ value: 'Ascend', name: 'Ascend' }, { value: 'Descend', name: 'Descend' }]}
+                    />
+                    <Sort currentValue={this.state.sortBy}
+                        handleChange={this.handleSortByChange}
+                        options={[{ value: 'pokemon', name: 'Pokemon' }, { value: 'attack', name: 'Attack' }, { value: 'type_1', name: 'Type' }, { value: 'defense', name: 'Defense' }]} />
 
                 </aside>
                 <main>
@@ -64,6 +85,9 @@ export default class SearchPage extends Component {
                                     <img alt='pokemon' src={poke.url_image} />
                                     <div>
                                         Name: {poke.pokemon}
+                                    </div>
+                                    <div>
+                                        Type: {poke.type_1}
                                     </div>
                                     <div>Attacks:{poke.attack}</div>
                                     <div>Defense: {poke.defense}</div>
