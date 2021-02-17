@@ -1,37 +1,39 @@
 import React, { Component } from 'react'
-import SearchBar from '../Search/SearchBar.js'
-import PokeList from '../Search/PokeList.js'
-import Sort from '../Search/Sort.js'
-// import pokes from './Data.js'
-import pokes from '../Common/Data.js'
+// import SearchBar from '../Search/SearchBar.js'
+// import PokeList from '../Search/PokeList.js'
+import request from 'superagent'
+// import PokeList from '../Search/PokeList';
+
 
 export default class SearchPage extends Component {
     //Declare state
     state = {
-        pokemon: pokes,
-        sortOrder: 'Ascend',
-        sortBy: 'pokemon',
+        pokemon: [],
+        sortOrder: '',
+        sortBy: '',
         filter: ''
     }
 
-    //clickSortHandler
-    handleSortOrderChange = (e) => {
-        //setState
-        this.setState({
-            sortOrder: e.target.value
-        })
+    //Fetch the data on load to display pokemon
+    componentDidMount = async () => {
+        //Declare data API
+        const pokeData = await request.get('https://pokedex-alchemy.herokuapp.com/api/pokedex?');
+
+        //Set the state
+        this.setState({ pokemon: pokeData.body.results });
     }
 
-    //clickHandler
-    handleSortByChange = (e) => {
+    //click handler
+    handleClick = async () => {
+        const pokeData = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.filter}`);
         //setState
         this.setState({
-            sortBy: e.target.value
-        })
-    }
+            pokemon: pokeData.body.results
 
-    //clickHandler
-    handleFilterChange = (e) => {
+        });
+    }
+    //Change handler
+    handleChange = async (e) => {
         //setState
         this.setState({
             filter: e.target.value
@@ -39,51 +41,28 @@ export default class SearchPage extends Component {
     }
 
     render() {
-        if (this.state.sortBy) {
 
-            if (typeof (pokes[0][this.state.sortBy]) === 'number') {
-                if (this.state.sortOrder === 'Ascend') {
-                    //Sort based on asc and desc, if statement
-                    this.state.pokemon.sort((a, b) => a[this.state.sortBy] - (b[this.state.sortBy]))
+        return (
+            <div className='display-container' >
+                <aside>
+                    <label>
+                        Search
+                    <input onChange={this.handleChange} />
+                    </label>
+                    <button onClick={this.handleClick}>Search</button>
 
-                } else { this.state.pokemon.sort((a, b) => b[this.state.sortBy] - (a[this.state.sortBy])) };
-            }
-
-            if (this.state.sortBy) {
-
-                if (typeof (pokes[0][this.state.sortBy]) !== 'number') {
-                    //Sort based on asc and desc, if statement
-                    if (this.state.sortOrder === 'Ascend') {
-                        this.state.pokemon.sort((a, b) => a[this.state.sortBy].localeCompare(b[this.state.sortBy]))
-
-                    } else { this.state.pokemon.sort((a, b) => b[this.state.sortBy].localeCompare(a[this.state.sortBy])) };
-                }
-            }
-
-
-            //filter based on character name
-            const filterPoke = pokes.filter(poke => poke.pokemon.includes(this.state.filter))
-            console.log(filterPoke);
-
-            return (
-                <div className='display-container'>
-                    <aside className='search-bar'>
-                        Search Character:
-                    <SearchBar currentValue={this.state.filter}
-                            handleChange={this.handleFilterChange} />
-                        <Sort currentValue={this.state.sortOrder}
-                            handleChange={this.handleSortOrderChange}
-                            options={[{ value: 'Ascend', name: 'Ascend' }, { value: 'Descend', name: 'Descend' }]}
-                        />
-                        <Sort currentValue={this.state.sortBy}
-                            handleChange={this.handleSortByChange}
-                            options={[{ value: 'pokemon', name: 'Pokemon' }, { value: 'attack', name: 'Attack' }, { value: 'type_1', name: 'Type' }, { value: 'defense', name: 'Defense' }]} />
-                    </aside>
-                    <main className='poke-display'>
-                        <PokeList pokes={filterPoke} />
-                    </main>
-                </div>
-            )
-        }
+                </aside>
+                <main>
+                    <div>
+                        {this.state.pokemon.map(poke =>
+                            <div key={poke.pokemon}>
+                                <img alt='pokemon' src={poke.url_image} />
+                                {poke.pokemon}
+                                {poke.type_1}
+                            </div>)}
+                    </div>
+                </main>
+            </div >
+        )
     }
 }

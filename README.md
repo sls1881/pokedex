@@ -1,3 +1,19 @@
+## Plan day 2
+-Remove dropdown component and calls
+-Remove sort
+-Remove filter
+-Remove Data.js
+
++Add the ComponentDidMount on load with dynamic api
++Add the onChange for input with dynamic api
++Add the onClick and button with dynamic api
++Review state - empty []
++Add spinner for load
+
+++Refactor to add function for handlers
+
+
+
 ![PokedexPlan](https://user-images.githubusercontent.com/65752519/108122379-0a2c2e80-7059-11eb-8dac-09ffea0f4c81.png)
 
 

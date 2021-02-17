@@ -8,8 +8,7 @@ export default class PokeList extends Component {
     render() {
         return (
             <ul className='pokeImages'>
-                {/* In this component, map through the array of plural and return a single into the HTML elements from the Item component */}
-                {this.props.pokes.map(pokemon => <PokeItem key={pokemon._id}
+                {this.props.pokeData.map(pokemon => <PokeItem key={pokemon._id}
                     pokeProp={pokemon}
                 />)}
             </ul>
