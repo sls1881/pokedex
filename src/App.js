@@ -8,6 +8,7 @@ import SearchPage from './Common/SearchPage.js';
 import HomePage from './Common/HomePage.js';
 import Header from './Common/Header.js'
 import './App.css'
+import DetailPage from './Common/DetailPage.js'
 
 
 //Step 1: Create routing to home and search page, copy past this ish
@@ -28,6 +29,11 @@ export default class App extends Component {
               path="/search"
               exact
               render={(routerProps) => <SearchPage {...routerProps} />}
+            />
+            <Route
+              path="/:pokemonName"
+              exact
+              render={(routerProps) => <DetailPage {...routerProps} />}
             />
           </Switch>
         </Router>

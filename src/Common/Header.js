@@ -14,6 +14,10 @@ export default withRouter(class Header extends React.Component {
                 {
                     this.props.location.pathname !== '/search' && <NavLink exact activeClassName='navLink' to='/search'>Search</NavLink>
                 }
+
+                {
+                    this.props.location.pathname !== '/pokemonName' && <NavLink exact activeClassName='navLink' to='/pokemonName'>Search</NavLink>
+                }
             </nav>
 
         )

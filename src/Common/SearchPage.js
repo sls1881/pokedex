@@ -4,12 +4,13 @@ import '../App.css';
 import Spinner from './Spinner.js'
 import Sort from '../Search/Sort.js'
 import SearchBar from '../Search/SearchBar.js'
+import PokeList from '../Search/PokeList.js'
 
 
 export default class SearchPage extends Component {
     //Declare state
     state = {
-        pokemon: [],
+        pokemonData: [],
         sortOrder: '',
         sortBy: '',
         filter: '',
@@ -30,7 +31,7 @@ export default class SearchPage extends Component {
 
         this.setState({
             loading: false,
-            pokemon: pokeData.body.results
+            pokemonData: pokeData.body.results
         });
     }
 
@@ -60,6 +61,10 @@ export default class SearchPage extends Component {
     }
 
     render() {
+        const {
+            pokemonData,
+            loading,
+        } = this.state;
 
         return (
             <div className='display-container' >
@@ -78,21 +83,10 @@ export default class SearchPage extends Component {
 
                 </aside>
                 <main>
-                    <div>
-                        {this.state.loading ? <Spinner /> :
-                            this.state.pokemon.map(poke =>
-                                <div key={poke.pokemon}>
-                                    <img alt='pokemon' src={poke.url_image} />
-                                    <div>
-                                        Name: {poke.pokemon}
-                                    </div>
-                                    <div>
-                                        Type: {poke.type_1}
-                                    </div>
-                                    <div>Attacks:{poke.attack}</div>
-                                    <div>Defense: {poke.defense}</div>
-                                </div>)}
-                    </div>
+                    {loading
+                        ? <Spinner />
+                        : <PokeList pokemonData={pokemonData} />
+                    }
                 </main>
             </div >
         )
