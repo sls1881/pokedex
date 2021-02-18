@@ -8,11 +8,11 @@ export default withRouter(class Header extends React.Component {
             <nav className='navContainer'>
                 <img className='pokeBall' alt='Poke Ball' src={'https://s.clipartkey.com/mpngs/s/54-541985_pokeball-pokemon-png-clipart-image-transparent-pokeball.png'} />
 
-                {this.props.location.pathname !== '/' && <NavLink exact activeClassName='link' to="/">Home</NavLink>
+                {this.props.location.pathname !== '/' && <NavLink className='nav-link' exact activeClassName='link' to="/">Home</NavLink>
                 }
 
                 {
-                    this.props.location.pathname !== '/search' && <NavLink exact activeClassName='navLink' to='/search'>Search</NavLink>
+                    this.props.location.pathname !== '/search' && <NavLink className='nav-link' exact activeClassName='link' to='/search'>Search</NavLink>
                 }
             </nav>
 

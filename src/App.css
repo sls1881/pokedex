@@ -37,9 +37,14 @@
   }
 }
 
+body, select, input, button {
+  font-family: 'Reggae One', cursive;
+  background-color: whitesmoke;
+}
+
 .pokeBall {
-  width: 30px;
-  height:30px;
+  width: 40px;
+  height:40px;
 }
 
 nav {
@@ -62,11 +67,15 @@ h2 {
 h1{
   font-size: 2rem;
   text-align: center;
-  color: red;
+  color: salmon;
+}
+
+p {
+  color: rgb(83, 83, 83);
 }
 
 .display-container {
-  margin: 30px;
+  background-color: lightcoral;
 }
 
 .home {
@@ -76,4 +85,74 @@ h1{
 .image-items {
   width: 300px;
   height: 300px;
+}
+
+.poke-link {
+  color: black;
+  text-decoration: none;
+}
+
+.poke-img{
+  width:200px;
+  height: 200px;
+  cursor: pointer;
+  transition: .2s ease-in-out;
+}
+
+.poke-img:hover {
+  transform: scale(1.8);
+}
+
+.style-poke {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.search-display {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.all-poke {
+  text-align: center;
+}
+
+.search-display {
+  margin-bottom: 50px;
+}
+
+select, input {
+  width: 150px;
+}
+
+.poke-grid {
+  background-color: rgb(62, 173, 136);
+  padding:20px;
+  border-radius: 10px;
+  height: 400px;
+  border: 1px black solid;
+  margin: 20px;
+}
+
+.detail-display {
+  text-align: center;
+}
+
+.home {
+  text-align: center;
+}
+
+.nav-link {
+  color: black;
+  text-decoration: none;
+}
+
+.spinner {
+  text-align: center;
+}
+
+.home-container {
+  background-image: url('https://wallpapercave.com/wp/ftUbDhb.jpg');
+  height: 100vh;
 }
