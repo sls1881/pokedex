@@ -9,13 +9,18 @@ export default class DetailPage extends Component {
     }
 
     componentDidMount = async () => {
+
+        this.setState({ loading: true });
+
         const pokeData = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.props.match.params.pokemonName}`);
 
         this.setState({
+            loading: false,
             detailData: pokeData.body.results[0]
         });
 
     }
+
     render() {
         const {
             detailData,
@@ -28,7 +33,7 @@ export default class DetailPage extends Component {
                     ? <Spinner />
                     : < DetailItem detailData={detailData} />
                 }
-            </div>
+            </div >
         )
     }
 }

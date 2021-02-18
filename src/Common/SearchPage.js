@@ -15,6 +15,8 @@ export default class SearchPage extends Component {
         sortBy: '',
         filter: '',
         loading: false,
+        currentPage: 1,
+        totalPokemon: 0,
     }
 
     //Fetch the data on load to display pokemon
@@ -27,16 +29,19 @@ export default class SearchPage extends Component {
 
         this.setState({ loading: true });
 
-        const pokeData = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.filter}&sort=${this.state.sortBy}&direction=${this.state.sortOrder}`);
+        const pokeData = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.filter}&sort=${this.state.sortBy}&direction=${this.state.sortOrder}&page=${this.state.currentPage}&perPage=100`);
 
         this.setState({
             loading: false,
-            pokemonData: pokeData.body.results
+            pokemonData: pokeData.body.results,
+            totalPokemon: pokeData.body.count
         });
     }
 
-    //click handler
+    //click handler for sort and search
     handleClick = async () => {
+        await this.setState({ currentPage: 1 });
+
         await this.fetchPokemon();
     }
 
@@ -60,19 +65,34 @@ export default class SearchPage extends Component {
         })
     }
 
+    //Click handler for next button
+    handleNextClick = async () => {
+        await this.setState({
+            currentPage: this.state.currentPage + 1
+        })
+        await this.fetchPokemon();
+        console.log('I work');
+    }
+
+    //Click handler for previous button
+    handlePrevClick = async () => {
+        await this.setState({
+            currentPage: this.state.currentPage - 1
+        })
+        await this.fetchPokemon();
+    }
+
     render() {
         const {
             pokemonData,
             loading,
         } = this.state;
 
+        const lastPage = Math.ceil(this.state.totalPokemon / 100);
+
         return (
             <div className='display-container' >
-                <aside>
-                    Search Character:
-                    <SearchBar currentValue={this.state.filter}
-                        handleClick={this.handleClick}
-                        handleChange={this.handleChange} />
+                <aside className='search-display'>
                     <Sort currentValue={this.state.sortOrder}
                         handleChange={this.handleSortOrderChange}
                         options={[{ value: 'Ascend', name: 'Ascend' }, { value: 'Descend', name: 'Descend' }]}
@@ -81,13 +101,22 @@ export default class SearchPage extends Component {
                         handleChange={this.handleSortByChange}
                         options={[{ value: 'pokemon', name: 'Pokemon' }, { value: 'attack', name: 'Attack' }, { value: 'type_1', name: 'Type' }, { value: 'defense', name: 'Defense' }]} />
 
+                        Search Character:
+                    <SearchBar currentValue={this.state.filter}
+                        handleClick={this.handleClick}
+                        handleChange={this.handleChange} />
                 </aside>
-                <main>
+                <main className='all-poke'>
                     {loading
                         ? <Spinner />
                         : <PokeList pokemonData={pokemonData} />
                     }
                 </main>
+                <section className='pag'>
+                    <button onClick={this.handlePrevClick} disabled={this.state.currentPage === 1}>Previous Page</button>
+                    <span className='page-num'> Page {this.state.currentPage} </span>
+                    <button onClick={this.handleNextClick} disabled={this.state.currentPage === lastPage}>Next Page</button>
+                </section>
             </div >
         )
     }
