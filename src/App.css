@@ -151,3 +151,8 @@ select, input {
 .spinner {
   text-align: center;
 }
+
+.home-container {
+  background-image: url('https://wallpapercave.com/wp/ftUbDhb.jpg');
+  height: 100vh;
+}

@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 export default class HomePage extends Component {
     render() {
         return (
-            <div>
+            <div className='home-container'>
                 <h1>Welcome to Pokedex Shuffle</h1>
                 <p className='home'>Visit the search page to filter through the Pokedex by Pokemon name, Attacks, Defenses, and Type of Pokemon. Have fun!</p>
             </div>
